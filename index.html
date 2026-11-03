@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VWO A/B Testing - Promotion Popup</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f3fa;
+    color: #333;
+}
+
+header {
+    background: white;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px #ddd;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #e83e8c;
+}
+
+nav {
+    color: #777;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.product {
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    display: flex;
+    gap: 35px;
+    align-items: center;
+    box-shadow: 0 5px 20px #ddd;
+}
+
+.product-image {
+    width: 45%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.product-info h1 {
+    font-size: 28px;
+}
+
+.price {
+    font-size: 26px;
+    color: #e83e8c;
+    font-weight: bold;
+}
+
+.old-price {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 16px;
+}
+
+.buy {
+    border: none;
+    padding: 15px 35px;
+    background: #e83e8c;
+    color: white;
+    border-radius: 30px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.buy:hover {
+    transform: scale(1.05);
+}
+
+/* POPUP */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(25, 10, 40, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    animation: fadeIn .5s;
+}
+
+.popup {
+    position: relative;
+    width: 90%;
+    max-width: 480px;
+    padding: 35px 25px;
+    text-align: center;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #fff, #ffe6f2);
+    box-shadow: 0 0 35px #ff8dc7,
+                0 0 80px #ffb5dc;
+    animation: popUp .7s ease;
+    overflow: hidden;
+}
+
+.popup.b {
+    background: linear-gradient(145deg, #fff, #fff0d9);
+    box-shadow: 0 0 35px #ff9a4d,
+                0 0 80px #ffd27d;
+}
+
+.icon {
+    font-size: 75px;
+    animation: bounce 1.5s infinite;
+}
+
+.popup h2 {
+    font-size: 30px;
+    line-height: 1.4;
+}
+
+.popup p {
+    font-size: 18px;
+}
+
+.discount {
+    font-size: 42px;
+    font-weight: bold;
+    color: #f02c83;
+    margin: 20px 0;
+}
+
+.b .discount {
+    color: #ff4b19;
+}
+
+.cta {
+    width: 100%;
+    border: none;
+    border-radius: 40px;
+    padding: 18px;
+    background: linear-gradient(90deg,#ff70ac,#ed2379);
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 20px #ff9bc7;
+}
+
+.b .cta {
+    background: linear-gradient(90deg,#ff9c45,#ff321d);
+}
+
+.cta:hover {
+    transform: scale(1.04);
+}
+
+.close {
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.sparkle {
+    position: absolute;
+    color: #ffc83d;
+    animation: sparkle 2s infinite;
+    pointer-events: none;
+}
+
+.s1 {top: 15%; left: 10%; font-size: 30px;}
+.s2 {top: 30%; right: 10%; font-size: 25px;}
+.s3 {bottom: 20%; left: 15%; font-size: 25px;}
+.s4 {bottom: 25%; right: 12%; font-size: 30px;}
+
+@keyframes sparkle {
+    0%,100% {opacity: .2; transform: scale(.7);}
+    50% {opacity: 1; transform: scale(1.5);}
+}
+
+@keyframes popUp {
+    from {transform: scale(.5); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes bounce {
+    0%,100% {transform: translateY(0);}
+    50% {transform: translateY(-10px);}
+}
+
+@media(max-width:600px) {
+    .product {
+        flex-direction: column;
+    }
+    .product-image {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">✨ BEAUTY SHOP</div>
+    <nav>홈　 상품　 장바구니 🛒</nav>
+</header>
+
+<div class="container">
+    <div class="product">
+        <img class="product-image"
+        src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=700"
+        alt="Fashion product">
+
+        <div class="product-info">
+            <h1>데일리 니트 스웨터</h1>
+            <p>편안하고 세련된 데일리 패션 아이템</p>
+            <p class="price">29,900원</p>
+            <p class="old-price">39,000원</p>
+            <p>🚚 무료배송</p>
+            <button class="buy" onclick="purchase()">
+                구매하기
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="overlay">
+    <div class="popup" id="popup">
+        <button class="close" onclick="closePopup()">×</button>
+
+        <span class="sparkle s1">✦</span>
+        <span class="sparkle s2">✧</span>
+        <span class="sparkle s3">✦</span>
+        <span class="sparkle s4">✧</span>
+
+        <div class="icon" id="icon"></div>
+        <h2 id="heading"></h2>
+        <p id="description"></p>
+        <div class="discount" id="discount"></div>
+        <button class="cta" id="cta" onclick="getCoupon()"></button>
+    </div>
+</div>
+
+<script>
+
+// Chia người truy cập thành hai nhóm 50:50
+const params = new URLSearchParams(location.search);
+let variant = params.get("variant");
+
+if (!["A", "B"].includes(variant)) {
+    variant = Math.random() < 0.5 ? "A" : "B";
+}
+
+// Hiển thị nội dung hai phiên bản
+const popup = document.getElementById("popup");
+
+if (variant === "A") {
+
+    popup.classList.remove("b");
+
+    document.getElementById("icon").innerHTML = "🎁";
+
+    document.getElementById("heading").innerHTML =
+        "10,000원 할인 쿠폰을 받아보세요!";
+
+    document.getElementById("description").innerHTML =
+        "할인 혜택을 놓치지 마세요!";
+
+    document.getElementById("discount").innerHTML =
+        "10,000원 할인";
+
+    document.getElementById("cta").innerHTML =
+        "지금 쿠폰 받기 💗";
+
+} else {
+
+    popup.classList.add("b");
+
+    document.getElementById("icon").innerHTML = "⏰🔥";
+
+    document.getElementById("heading").innerHTML =
+        "오늘만 특별 할인!";
+
+    document.getElementById("description").innerHTML =
+        "현재 보고 있는 상품과 장바구니 상품";
+
+    document.getElementById("discount").innerHTML =
+        "10% 할인";
+
+    document.getElementById("cta").innerHTML =
+        "지금 바로 할인받기 🔥";
+}
+
+// Ghi nhận dữ liệu thử nghiệm
+function track(eventName) {
+    const key = "AB_test_" + variant;
+    let data = JSON.parse(localStorage.getItem(key) || "{}");
+
+    data[eventName] = (data[eventName] || 0) + 1;
+
+    localStorage.setItem(key, JSON.stringify(data));
+
+    console.log("A/B Test:", variant, eventName, data);
+}
+
+// Ghi nhận lượt hiển thị popup
+track("popup_view");
+
+function getCoupon() {
+    track("coupon_click");
+
+    alert(
+        variant === "A"
+        ? "10,000원 할인 쿠폰을 받았습니다!"
+        : "오늘만 10% 할인 혜택을 받았습니다!"
+    );
+
+    closePopup();
+}
+
+function closePopup() {
+    document.getElementById("overlay").style.display = "none";
+    track("popup_close");
+}
+
+function purchase() {
+    track("purchase_click");
+    alert("구매 버튼을 클릭했습니다!");
+}
+
+// Kiểm tra kết quả trong Console
+console.log("현재 실험 그룹:", variant);
+
+</script>
+
+</body>
+</html>
